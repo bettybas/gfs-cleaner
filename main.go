@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/jinzhu/now"
+	. "github.com/logrusorgru/aurora"
 	"github.com/urfave/cli"
 )
 
