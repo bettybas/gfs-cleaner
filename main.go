@@ -12,7 +12,6 @@ import (
 	"time"
 
 	"github.com/jinzhu/now"
-	. "github.com/logrusorgru/aurora"
 	"github.com/urfave/cli"
 )
 
@@ -22,11 +21,7 @@ var (
 	date    = "unknow"
 )
 
-var dateRe = regexp.MustCompile("[^0-9]")
-
-func filenameWithoutExtension(fn string) string {
-	return strings.TrimSuffix(fn, path.Ext(fn))
-}
+var dateRe = regexp.MustCompile(`(\d{4}-\d{2}-\d{2})`)
 
 func main() {
 	app := cli.NewApp()
@@ -146,14 +141,7 @@ func clean(c *cli.Context) error {
 	for _, item := range items {
 		fmt.Printf("Check '%s'...", item)
 
-		/*stat, err := os.Stat(p)
-		if err != nil {
-			fmt.Printf("Error to get file info: %s. %q\n", p, err)
-			continue
-		}*/
-
-		//isDir := stat.IsDir()
-		str := dateRe.ReplaceAllString(item, "")
+		str := strings.ReplaceAll(dateRe.FindString(item), "-", "")
 
 		t, err := time.Parse("20060102", str)
 		if err != nil {
