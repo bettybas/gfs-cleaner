@@ -22,7 +22,8 @@ var (
 	date    = "unknow"
 )
 
-var dateRe = regexp.MustCompile(`(\d{4}-\d{2}-\d{2})`)
+var dateRe = regexp.MustCompile("[^0-9]")
+var fileCheckerRe = regexp.MustCompile(`(\d{4}-\d{2}-\d{2})`)
 
 func main() {
 	app := cli.NewApp()
@@ -142,7 +143,7 @@ func clean(c *cli.Context) error {
 	for _, item := range items {
 		fmt.Printf("Check '%s'...", item)
 
-		str := strings.ReplaceAll(dateRe.FindString(item), "-", "")
+		str := strings.ReplaceAll(fileCheckerRe.FindString(item), "-", "")
 
 		t, err := time.Parse("20060102", str)
 		if err != nil {
