@@ -22,7 +22,7 @@ var (
 	date    = "unknow"
 )
 
-var dateRe = regexp.MustCompile("[^0-9]")
+// var dateRe = regexp.MustCompile("[^0-9]")
 var fileCheckerRe = regexp.MustCompile(`(\d{4}-\d{2}-\d{2})`)
 
 func main() {
@@ -236,9 +236,9 @@ func getLastDay(items []string) time.Time {
 	var lastDay time.Time
 
 	for _, item := range items {
-		str := dateRe.ReplaceAllString(item, "")
+		str := fileCheckerRe.FindString(item)
 
-		t, err := time.Parse("20060102", str)
+		t, err := time.Parse("2006-01-02", str)
 		if err != nil {
 			continue
 		}
